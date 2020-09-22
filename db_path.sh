@@ -21,7 +21,7 @@ EXCLUDE_LIST="--exclude=/var/cache \
               --exclude=/var/cache"
 echo "================"
 echo "Copy from Dev10 domain to Ahmed Domain............................................."
-rsync -zzarvh --exclude={'/pub/media','/pub/static','/var/page_cache','/var/cache','/var/full_page_cache','/var/session','/var/log','/var/backup','/var/import','/var/export','/var/locks','/var/report','/includes/src','/includes/config.php'} /microcloud/domains/tondev/domains/dev10.tonsoftiles.co.uk/http/ /microcloud/domains/tondev/domains/ahmed.tonsoftiles.co.uk/http/
+# rsync -zzarvh --exclude={'/pub/media','/pub/static','/var/page_cache','/var/cache','/var/full_page_cache','/var/session','/var/log','/var/backup','/var/import','/var/export','/var/locks','/var/report','/includes/src','/includes/config.php'} /microcloud/domains/tondev/domains/dev10.tonsoftiles.co.uk/http/ /microcloud/domains/tondev/domains/ahmed.tonsoftiles.co.uk/http/
 
 ls /microcloud/domains/tondev/domains/ahmed.tonsoftiles.co.uk/http/
 
@@ -62,25 +62,9 @@ ls
 pwd
 wget http://dev10.tonsoftiles.co.uk/pub/db.sql.gz
 mv db.sql.gz var/
-# echo y | ./mage2-dbdump.sh -rz
+echo y | ./mage2-dbdump.sh -rz
 
-# echo "======================================"
-# echo "REplacing URL ..............."
+echo "======================================"
+echo "REplacing URL ..............."
 # curl -X POST -F 'value=$URL' http://ahmed.tonsoftiles.co.uk/mage2.php
 
-# if [ -f "$LIVE/app/etc/local.xml" ]; then
-#      MAGENTO_VERSION=1
-#      MAGE_DBDUMP_SCRIPT="mage-dbdump.sh"
-#      MEDIA_DIR="/media"
-# elif [ -f "$LIVE/app/etc/env.php" ]; then
-#      MAGENTO_VERSION=2
-#      MAGE_DBDUMP_SCRIPT="mage2-dbdump.sh"
-#      MEDIA_DIR="/pub/media"
-# else
-#     echo "Error: Could not detect Magento version"
-#     exit 1
-# fi
-
-
-# LIVE_DOMAIN=$(parse_domain "$LIVE")
-# DEV_DOMAIN=$(parse_domain "$DEV")

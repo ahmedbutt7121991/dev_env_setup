@@ -72,4 +72,49 @@ echo "DB credentials file path : $db_cred_file_path"
 echo "Base Domain : $base_domain"
 echo "vhost Domain: $vhost_domain"
 
+echo "===================================================================================================="
+echo "=================     DEV ENVIRONMENT SETUP SCRIPT RUNNING............        ======================"
+echo "===================================================================================================="
+ls ${DEV_PATH}
 
+
+echo "*** SSH into Prod Source Server ***"
+echo "================"
+echo "Home dir Listing............................................."
+pwd	
+
+cd ${LIVE_PATH}
+echo "==========================="
+echo "Script location dir Listing............................................."
+pwd
+
+echo "**** Creating DB dump using mage2 Script ****"
+
+./${db_dump_script} -dz
+cd var
+ls | grep db
+
+mv db.sql.gz ${db_dump_path}
+cd ${db_dump_path}
+ls ${db_dump_path}
+
+echo "==========================="
+echo "Changing DB credentials on http/app/etc/env.php File............................................."
+cd ${DEV_PATH}
+ls
+pwd
+echo "Changing DB Creds.....in env.php"
+cat app/etc/env.php
+sed -i "s/ahmed_tonsss/${DB_NAME}/gI" app/etc/env.php
+sed -i "s/abcdefghijklmnopqrstuvwxyz/${DB_PASSWORD}/gI" app/etc/env.php
+cat app/etc/env.php
+
+echo "======================================"
+echo "Restoring DB in another vhost..."
+cd ${DEV_PATH}
+ls
+pwd
+wget http://dev10.tonsoftiles.co.uk/pub/db.sql.gz
+mv db.sql.gz var/
+cd var
+ls | grep db
