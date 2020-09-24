@@ -129,8 +129,8 @@ dev_task() {
     pwd
     echo "Changing DB Creds.....in env.php"
     cat app/etc/${cred_file_name}
-    sed -i "s/${DB_NAME}/${RAND_USER_DB}/gI" app/etc/${cred_file_name}
-    sed -i "s/${DB_PASSWORD}/${RAND_DB_PASS}/gI" app/etc/${cred_file_name}
+    sed -i "s/${prod_db_name}/${DB_NAME}/gI" app/etc/${cred_file_name}
+    sed -i "s/${prod_db_pass}/${DB_PASSWORD}/gI" app/etc/${cred_file_name}
     cat app/etc/${cred_file_name}
 
     echo "======================================"
