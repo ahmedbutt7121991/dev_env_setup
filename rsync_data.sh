@@ -7,12 +7,15 @@ echo "................................."
 echo "..........DATA RSYNC............."
 echo "................................."
 # Here you can place your function
-rsync -zzarvh --exclude={'/pub/media','/pub/static','/var/page_cache','/var/cache','/var/full_page_cache','/var/session','/var/log','/generated'} ${LIVE_PATH} ${DEV_PATH}
+# rsync -zzarvh --exclude={'/pub/media','/pub/static','/var/page_cache','/var/cache','/var/full_page_cache','/var/session','/var/log','/generated'} ${LIVE_PATH} ${DEV_PATH}
 # end="$(date +%s.%N)/10000000"
 # duration=$(echo "$end - $start")
 # execution_time="printf "%.f seconds" $duration"
-
+rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
 # echo "Script Execution Time: $execution_time"
+
+# cp -rvp ${LIVE_PATH} ${DEV_PATH}
+
 echo "................................."
 echo "..........PRODUCTION............."
 echo "................................."

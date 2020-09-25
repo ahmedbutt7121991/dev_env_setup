@@ -140,6 +140,16 @@ dev_task() {
     cd ${DEV_PATH}
     ls
     pwd
+
+    echo "======================================="
+    echo "=====>>>>>>  Running::: php-7.1 bin/magento setup:di:compile      <<<<<====="
+
+    php-7.1 bin/magento setup:di:compile
+    php-7.1 bin/magento setup:upgrade
+    php-7.1 bin/magento c:f
+
+    echo "Downloading Data base: wget http://dev10.tonsoftiles.co.uk/pub/db.sql.gz"
+
     wget http://dev10.tonsoftiles.co.uk/pub/db.sql.gz
     mv db.sql.gz var/
     cd var
