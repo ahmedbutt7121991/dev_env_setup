@@ -11,7 +11,8 @@ $(basename $0) ([args])
     -p      RUN FUNCTION RELATED TO PRODUCTION TASKS
     -d      RUN FUNCTION RELATED TO DEV TASKS
     -u      UPDATE URL IN DATA BASE
-    -cpdu   CREATE DB- TAKE DB DUMP - RESTORE DB IN DEV - UPDATE URLs
+    -l      CREATE ADMIN PANEL LOGIN CREDENTIALS
+    -cpdul   CREATE DB- TAKE DB DUMP - RESTORE DB IN DEV - UPDATE URLs - CREATE ADMIN PANEL LOGIN CREDS
 EOF
 exit 0
 }
@@ -89,23 +90,23 @@ db_creater(){
 echo "=============================="
 echo "Creating a new database and user"
 echo "=============================="
-DEV_DB_PASS_NEW=
-ls
-pwd
-cd /microcloud/scripts_ro/
-domain_env_path="/microcloud/domains/tondev/domains/testing.tonsoftiles.co.uk/tondev_env_setup"
-echo "Checking Command OutPut"
-echo "Dev DB creation and password"
-create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee ${domain_env_path}/dbcreds
-cd ${domain_env_path}
-cat dbcreds 
-DEV_DB_PASS_NEW="$( awk '/Password/ {print $3}' dbcreds)"
-echo "======================================="
-echo "dev db pass new : ${DEV_DB_PASS_NEW}"
-echo "======================================="
-DB_PASSWORD="${DEV_DB_PASS_NEW}"
-echo "======================================="
-DB_PASSWORD_ENV="'${DEV_DB_PASS_NEW}',"
+# DEV_DB_PASS_NEW=
+# ls
+# pwd
+# cd /microcloud/scripts_ro/
+# domain_env_path="/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/dev_env_setup/sample_env_setup_v2"
+# echo "Checking Command OutPut"
+# echo "Dev DB creation and password"
+# create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee ${domain_env_path}/dbcreds
+# cd ${domain_env_path}
+# cat dbcreds 
+# DEV_DB_PASS_NEW="$( awk '/Password/ {print $3}' dbcreds)"
+# echo "======================================="
+# echo "dev db pass new : ${DEV_DB_PASS_NEW}"
+# echo "======================================="
+# DB_PASSWORD="${DEV_DB_PASS_NEW}"
+# echo "======================================="
+# DB_PASSWORD_ENV="'${DEV_DB_PASS_NEW}',"
 echo "======================================="
 echo "${DB_PASSWORD}"
 echo "======================================="
@@ -127,13 +128,13 @@ prod_tasks() {
 
     echo "**** Creating DB dump using mage2 Script ****"
 
-    ./${db_dump_script} -dz
+    bash ${db_dump_script} -dz
     cd var
     ls | grep db
 
-    mv db.sql.gz ${db_dump_path}
-    cd ${db_dump_path}
-    ls ${db_dump_path}
+    # mv db.sql.gz ${db_dump_path}
+    # cd ${db_dump_path}
+    # ls ${db_dump_path}
 }
 
 
@@ -179,15 +180,26 @@ dev_task() {
     # php-7.1 bin/magento setup:upgrade
     # php-7.1 bin/magento c:f
 
-    echo "Downloading Data base: wget http://dev10.tonsoftiles.co.uk/pub/db.sql.gz"
+    # echo "Downloading Data base: wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz"
 
-    wget http://dev10.tonsoftiles.co.uk/pub/db.sql.gz
-    mv db.sql.gz var/
+    # wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz
+    # mv db.sql.gz var/
     cd var
     ls | grep db
-    cd ..
-    pwd
-    echo y | ./mage2-dbdump.sh -rz
+
+    if [ -e "db.sql.gz" ]
+    then
+        cd ..
+        pwd
+        echo y | bash mage2-dbdump.sh -rz
+    else
+        echo "Downloading Data base: wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz"
+        wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz
+        # mv db.sql.gz var/
+                cd ..
+        pwd
+        echo y | bash mage2-dbdump.sh -rz
+    fi
 }
 
 db_update(){
@@ -196,15 +208,15 @@ echo "=======================    UPDATING DATABASES URLS   ==================="
 echo "========================================================================"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -e "Show databases;"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "select * from ${DB_TABLE};"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_url';"
-# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_media_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_link_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/secure/base_url';"
-# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/secure/base_media_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/secure/base_link_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='tm_integrations/general/tm_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='wallfloor/general/wallfloor_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='tonssystem/general/tons_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_url';"
+# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_media_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_link_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/secure/base_url';"
+# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/secure/base_media_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/secure/base_link_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='tm_integrations/general/tm_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='wallfloor/general/wallfloor_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='tonssystem/general/tons_url';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='advanced/modules_disable_output/Mb_Ipconfigurations';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='mb_microconnect/credentials/password';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='mb_microconnect/credentials/user_name';"
@@ -217,6 +229,19 @@ mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='_' Where path='ipconfigurations/general/primary_ip';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='_' Where path='ipconfigurations/general/secondary_ip';"
 }
+
+admin_panel_login_creds(){
+echo "=================================================================="
+echo "=======================    ADMIN PANEL CREDS   ==================="
+echo "=================================================================="
+cd ${DEV_PATH}
+admin_pass="${DB_NAME}@123"
+php-7.1 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=ahmed.butt@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
+
+echo "ADMIN PANEL USERNAME:     ${DB_NAME}"
+echo "ADMIN PANEL PASSWORD:     ${admin_pass}"
+}
+
 
 if [[ "$1" == "" ]]; then
   usage
@@ -238,10 +263,14 @@ if [[ "$1" == "-u" ]]; then
     db_update
 fi
 
+if [[ "$1" == "-l" ]]; then
+    admin_panel_login_creds
+fi
 
-if [[ "$1" == "-cpdu" ]]; then
+if [[ "$1" == "-cpdul" ]]; then
     db_creater
     prod_tasks
     dev_task
     db_update
+    admin_panel_login_creds
 fi

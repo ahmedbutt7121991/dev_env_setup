@@ -11,6 +11,12 @@ echo ".................................."
 # time ./parse_db_data.sh -c
 
 echo "................................."
+echo "..........PRODUCTION............."
+echo "................................."
+
+# time ./parse_db_data.sh -p
+
+echo "................................."
 echo "..........DATA RSYNC............."
 echo "................................."
 # Here you can place your function
@@ -18,7 +24,7 @@ echo "................................."
 # end="$(date +%s.%N)/10000000"
 # duration=$(echo "$end - $start")
 # execution_time="printf "%.f seconds" $duration"
-rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
+# rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
 # echo "Script Execution Time: $execution_time"
 
 # cp -rvp ${LIVE_PATH} ${DEV_PATH}
@@ -41,9 +47,21 @@ echo "..................................."
 
 # time ./parse_db_data.sh -u
 
-time ./parse_db_data.sh -cpdu
+echo ".............................................."
+echo "..........ADMIN_PANEL_LOGIN_CREDS............."
+echo ".............................................."
+
+# time ./parse_db_data.sh -l
+
+echo "................................"
+echo "..........STANDLONE............."
+echo "................................"
+
+# time ./parse_db_data.sh -cpdul
+
+
 echo "..................................."
 echo "..........CLEANINGCACHE............"
 echo "..................................."
-cd ${DEV_PATH}
-php-7.1 bin/magento c:f
+# cd ${DEV_PATH}
+# php-7.1 bin/magento c:f 
