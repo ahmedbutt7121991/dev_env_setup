@@ -90,6 +90,7 @@ db_creater(){
 echo "=============================="
 echo "Creating a new database and user"
 echo "=============================="
+<<<<<<< HEAD
 DEV_DB_PASS_NEW=
 ls
 pwd
@@ -107,6 +108,25 @@ echo "======================================="
 DB_PASSWORD="${DEV_DB_PASS_NEW}"
 echo "======================================="
 DB_PASSWORD_ENV="'${DEV_DB_PASS_NEW}',"
+=======
+# DEV_DB_PASS_NEW=
+# ls
+# pwd
+# cd /microcloud/scripts_ro/
+# domain_env_path="/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/dev_env_setup/sample_env_setup_v2"
+# echo "Checking Command OutPut"
+# echo "Dev DB creation and password"
+# create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee ${domain_env_path}/dbcreds
+# cd ${domain_env_path}
+# cat dbcreds 
+# DEV_DB_PASS_NEW="$( awk '/Password/ {print $3}' dbcreds)"
+# echo "======================================="
+# echo "dev db pass new : ${DEV_DB_PASS_NEW}"
+# echo "======================================="
+# DB_PASSWORD="${DEV_DB_PASS_NEW}"
+# echo "======================================="
+# DB_PASSWORD_ENV="'${DEV_DB_PASS_NEW}',"
+>>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
 echo "======================================="
 echo "${DB_PASSWORD}"
 echo "======================================="
@@ -196,7 +216,11 @@ dev_task() {
         echo "Downloading Data base: wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz"
         wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz
         # mv db.sql.gz var/
+<<<<<<< HEAD
         cd ..
+=======
+                cd ..
+>>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
         pwd
         echo y | bash mage2-dbdump.sh -rz
     fi
@@ -208,6 +232,7 @@ echo "=======================    UPDATING DATABASES URLS   ==================="
 echo "========================================================================"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -e "Show databases;"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "select * from ${DB_TABLE};"
+<<<<<<< HEAD
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_url';"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_media_url';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_link_url';"
@@ -217,6 +242,17 @@ mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='tm_integrations/general/tm_url';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='wallfloor/general/wallfloor_url';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='tonssystem/general/tons_url';"
+=======
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_url';"
+# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_media_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_link_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/secure/base_url';"
+# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/secure/base_media_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='web/secure/base_link_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='tm_integrations/general/tm_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='wallfloor/general/wallfloor_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mnawhole.wallsandfloors.co.uk/' Where path='tonssystem/general/tons_url';"
+>>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='advanced/modules_disable_output/Mb_Ipconfigurations';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='mb_microconnect/credentials/password';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='mb_microconnect/credentials/user_name';"
