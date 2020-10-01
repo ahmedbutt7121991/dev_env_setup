@@ -18,7 +18,10 @@ do
         cd ${initial}${domain}/domains/
         for vhost in *
         do
-            echo "${domain} --->>> ${vhost}"
+            # echo "${domain} --->>> ${vhost}"
+            name="$( echo ${vhost} | awk -F'.' '{print $1}')"
+            subdomain="$( echo ${vhost} | awk -F'.' '{print $2}')"
+            echo "${domain} --->>> ${vhost}=============>>>>>${name} --->>> ${subdomain}"
         done
     fi
 done
