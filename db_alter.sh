@@ -1,6 +1,9 @@
 #!/bin/bash
 source config.sh
-
+# dev_db_host="$( awk '/host/ {print $3}' $db_cred_file_path)"
+# dev_db_name="$( awk '/dbname/ {print $3}' $db_cred_file_path)"
+# dev_db_pass="$( awk '/password/ {print $3}' $db_cred_file_path)"
+# dev_user_name="$( awk '/username/ {print $3}' $db_cred_file_path)"
 # BD_HOST='db3.i'
 # DB_NAME='ahmed_tons'
 # USER_NAME='ahmed_tons'
