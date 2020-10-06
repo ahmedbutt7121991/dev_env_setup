@@ -41,9 +41,9 @@
             <default_setup>
                 <connection>
                     <host><![CDATA[db3.i]]></host>
-                    <username><![CDATA[ahmed_wildfire]]></username>
-                    <password><![CDATA[absdasbdbasdasfire]]></password>
-                    <dbname><![CDATA[ahmed_wildfire]]></dbname>
+                    <username><![CDATA[tildev_test4]]></username>
+                    <password><![CDATA[XilpeZNOnlnvmX5m]]></password>
+                    <dbname><![CDATA[tildev_test4]]></dbname>
                     <active>1</active>
                 </connection>
             </default_setup>
