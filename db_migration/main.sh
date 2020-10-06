@@ -29,5 +29,5 @@ echo "=======>>>    MAIN SCRIPT     <<<======="
 # pwd 
 # time ./db_alter.sh
 
-# time bash db_migrate.sh -drute
-time bash db_migrate.sh -t
+time bash db_migrate.sh -drute
+# time bash db_migrate.sh -t

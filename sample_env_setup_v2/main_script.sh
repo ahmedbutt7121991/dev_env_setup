@@ -24,11 +24,7 @@ echo "................................."
 # end="$(date +%s.%N)/10000000"
 # duration=$(echo "$end - $start")
 # execution_time="printf "%.f seconds" $duration"
-<<<<<<< HEAD
 rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
-=======
-# rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
->>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
 # echo "Script Execution Time: $execution_time"
 
 # cp -rvp ${LIVE_PATH} ${DEV_PATH}
@@ -43,31 +39,19 @@ echo "................................."
 echo "..........DEVELOPMENT............."
 echo "................................."
 
-<<<<<<< HEAD
 time ./parse_db_data.sh -d
-=======
-# time ./parse_db_data.sh -d
->>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
 
 echo "..................................."
 echo "..........DATABASE_URL............."
 echo "..................................."
 
-<<<<<<< HEAD
 time ./parse_db_data.sh -u
-=======
-# time ./parse_db_data.sh -u
->>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
 
 echo ".............................................."
 echo "..........ADMIN_PANEL_LOGIN_CREDS............."
 echo ".............................................."
 
-<<<<<<< HEAD
 time ./parse_db_data.sh -l
-=======
-# time ./parse_db_data.sh -l
->>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb
 
 echo "................................"
 echo "..........STANDLONE............."
@@ -79,10 +63,5 @@ echo "................................"
 echo "..................................."
 echo "..........CLEANINGCACHE............"
 echo "..................................."
-<<<<<<< HEAD
 cd ${DEV_PATH}
 php-7.1 bin/magento c:f 
-=======
-# cd ${DEV_PATH}
-# php-7.1 bin/magento c:f 
->>>>>>> 6c214fbc94b3fb82f63f6cd7292da61b2b2860eb

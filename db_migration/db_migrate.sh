@@ -14,23 +14,13 @@ $(basename $0) ([args])
     -u      CHANGE DB URL
     -t      TRUNCATE TABLES
     -e      ELIMINATE DB DUMP
+    -drute  RUN ALL ABOVE TASKS IN SEQUENCE
 EOF
 exit 0
 }
 
-
-echo "======================"
-echo "====  DUMPING DB  ===="
-echo "======================"
-# echo "DUMPING SCRIPT::::::  ${db_dump_script}"
-echo "==sshing production server=="
-
-
 prod_tasks() {
     echo "===========>>>>"
-    echo "======================================================================="
-    echo "===============       PRODUCTION TASKS RUNNING        ================="
-    echo "======================================================================="
 
     ssh ${PRODUCTION_SERVER} "pwd;
     cd ${PROD_DOMAIN_PATH};
@@ -62,16 +52,8 @@ prod_tasks() {
     # ls ${db_dump_path}
 }
 
-echo "========================"
-echo "====  RESTORING DB  ===="
-echo "========================"
-
-echo "==sshing Development server=="
-
 dev_tasks() {
-    echo "===================================================================================================="
-    echo "=================     DEV ENVIRONMENT SETUP SCRIPT RUNNING............        ======================"
-    echo "===================================================================================================="
+    echo "======================================>>>"
     pwd
     echo "======================================"
     echo \"Restoring DB in another vhost...\"
@@ -95,10 +77,6 @@ dev_tasks() {
 
 db_bk_rm() {
     echo "===========>>>>"
-    echo "======================================================================="
-    echo "===============       PRODUCTION TASKS RUNNING        ================="
-    echo "======================================================================="
-
     ssh ${PRODUCTION_SERVER} "pwd;
     cd ${PROD_DOMAIN_PATH};
     echo \"Script location dir Listing.............................................\";
@@ -161,7 +139,7 @@ url_update() {
     echo "=======================    CHANGING DATABASES URLS   ==================="
     echo "========================================================================"
     mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -e "Show databases;"
-    mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "select * from ${DB_TABLE};"
+    # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "select * from ${DB_TABLE};"
     mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_url';"
     # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_media_url';"
     mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_link_url';"

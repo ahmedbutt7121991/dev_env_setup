@@ -97,7 +97,7 @@ cd /microcloud/scripts_ro/
 domain_env_path="/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/dev_env_setup/sample_env_setup_v2"####################################
 echo "Checking Command OutPut"
 echo "Dev DB creation and password"
-create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee -a ${domain_env_path}/dbcreds
+create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee ${domain_env_path}/dbcreds
 cd ${domain_env_path}
 cat dbcreds 
 DEV_DB_PASS_NEW="$( awk '/Password/ {print $3}' dbcreds)"
