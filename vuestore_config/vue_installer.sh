@@ -98,5 +98,20 @@ echo "install yarn in both directories"
 echo "Copying cp /var/www/html/vuestorefront/config/default.json /var/www/html/vuestorefront/config/local.json"
 echo "Copying cp /var/www/html/vuestorefront-api/config/default.json /var/www/html/vuestorefront-api/config/local.json"
 echo "Edit /var/www/html/vuestorefront-api/config/local.json
----->   Edit URL & TOKENS created from adminpanel in integration section"
+---->   Edit URL (using which browsing site)& TOKENS created from adminpanel in integration section"
 echo "Check API Version in vuestorefront-api/config/local.json should be 7.1 not 5.6"
+echo "
+backend/adminpanel -->  store --> configuration --> Vuestore --> indexer --> vsf = prod(ip:3000),devlocal(localhost:3000)
+backend/adminpanel -->  store --> configuration --> Vuestore --> indexer --> elasticsearch = servicename of elasticsearch in docker-compose file
+backend/adminpanel -->  system --> integration --> create new / use already created tokens in above local.json file
+"
+echo "
+at webserver container http location run indexer
+php bin/magento indexer:reindex
+and in local directories of vuestore and vuestore-api RUN
+yarn && yarn dev
+"
+echo "
+for creating user for backend/adminpanel login
+php bin/magento admin:user:create
+"
