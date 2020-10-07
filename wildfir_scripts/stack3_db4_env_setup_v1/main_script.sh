@@ -8,13 +8,13 @@ echo ".................................."
 echo "..........DB CREATION............."
 echo ".................................."
 
-time ./parse_db_data.sh -c
+# time ./parse_db_data.sh -c
 
 echo "................................."
 echo "..........PRODUCTION............."
 echo "................................."
 
-time ./parse_db_data.sh -p
+# time ./parse_db_data.sh -p
 
 echo "................................."
 echo "..........DATA RSYNC............."
@@ -24,19 +24,20 @@ echo "................................."
 # end="$(date +%s.%N)/10000000"
 # duration=$(echo "$end - $start")
 # execution_time="printf "%.f seconds" $duration"
-if [[ ${MAGE_V} == '1']];then
-    echo "MAGENTO 1"
-    rsync -zzarvh --exclude '/media' ${LIVE_PATH} ${DEV_PATH}
-    echo "Done........ Successfully Copied Data From PROD"    
-elif [[ ${MAGE_V} == '2']];then
-    echo "MAGENTO 2"
-    rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
-    echo "Done........ Successfully Copied Data From PROD"
-else
-    echo "Error: Could not detect Magento version"
-    exit 1
-fi
-
+####################################################################
+# if [[ $MAGE_V == '1' ]]; then
+#     echo "MAGENTO 1"
+#     rsync -zzarvh --exclude '/media' ${LIVE_PATH} ${DEV_PATH}
+#     echo "Done........ Successfully Copied Data From PROD"    
+# elif [[ $MAGE_V == '2' ]]; then
+#     echo "MAGENTO 2"
+#     rsync -zzarvh --exclude '/pub/media' ${LIVE_PATH} ${DEV_PATH}
+#     echo "Done........ Successfully Copied Data From PROD"
+# else
+#     echo "Error: Could not detect Magento version"
+#     exit 1
+# fi
+#####################################################################
 # echo "Script Execution Time: $execution_time"
 
 # cp -rvp ${LIVE_PATH} ${DEV_PATH}
@@ -51,7 +52,7 @@ echo "................................."
 echo "..........DEVELOPMENT............."
 echo "................................."
 
-time ./parse_db_data.sh -d
+# time ./parse_db_data.sh -d
 
 echo "..................................."
 echo "..........DATABASE_URL............."

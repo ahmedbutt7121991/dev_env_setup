@@ -63,7 +63,7 @@ fi
 
 
 
-if [[  $magento_version == '1' ]];then
+if [[  $magento_version == '1' ]]; then
         # prod_db_host="$(awk '/<host>(<!\[CDATA\[)?(.*)(\]\]>)?<\/host>/ {print $1}' $db_cred_file_path | sed -e "s/<host><!\[CDATA\[//g" -e "s/\]\]><\/host>//g")"#| sed "s#<host><!\[CDATA\[##g;s#\]\]><\/host>##g"
     prod_db_host="$(grep -Eohm1 "<host>(<!\[CDATA\[)?(.*)(\]\]>)?<\/host>" $db_cred_file_path | sed -e "s/<host><!\[CDATA\[//g" -e "s/\]\]><\/host>//g")"
     # prod_db_name="$(awk '/dbname/ {print $1}' $db_cred_file_path | sed "s#<dbname><!\[CDATA\[##g;s#\]\]><\/dbname>##g")"
@@ -75,7 +75,7 @@ if [[  $magento_version == '1' ]];then
     # sed -i "s/${prod_db_pass}/${DB_PASSWORD_ENV}/gI" ${db_cred_file_path}
 fi
 
-if [[  $magento_version == '2' ]];then
+if [[  $magento_version == '2' ]]; then
     # prod_db_host="$( awk -F'=>' '/SELINUX=disabled/ { print $2 }' /etc/selinux/config)"
     prod_db_host="$( awk '/host/ {print $3}' $db_cred_file_path)"
     prod_db_name="$( awk '/dbname/ {print $3}' $db_cred_file_path)"
@@ -180,7 +180,8 @@ dev_task() {
     pwd
     echo "Changing DB Creds.....in env.php"
     cat app/etc/${cred_file_name}
-
+    prod_db_name="'at_wildfir',"
+    prod_db_pass="'688c03ce44d3d9e21c0de924167724e0',"
     sed -i "s/${prod_db_name}/${DB_NAME_ENV}/gI" app/etc/${cred_file_name}
     sed -i "s/${prod_db_pass}/${DB_PASSWORD_ENV}/gI" app/etc/${cred_file_name}
 
@@ -210,14 +211,14 @@ dev_task() {
     then
         cd ..
         pwd
-        if [[  $magento_version == '1' ]];then
+        if [[  $magento_version == '1' ]]; then
             echo y | bash mage-dbdump.sh -rz
         fi
-        if [[  $magento_version == '2' ]];then
+        if [[  $magento_version == '2' ]]; then
             echo y | bash mage2-dbdump.sh -rz
         fi
     else
-        if [[  $magento_version == '1' ]];then
+        if [[  $magento_version == '1' ]]; then
             echo "Downloading Data base: wget http://${live_vhost_domain}/db.sql.gz"
             wget http://${live_vhost_domain}/db.sql.gz
             # mv db.sql.gz var/
@@ -226,7 +227,7 @@ dev_task() {
             echo y | bash mage-dbdump.sh -rz
         fi
 
-        if [[  $magento_version == '2' ]];then
+        if [[  $magento_version == '2' ]]; then
             echo "Downloading Data base: wget http://${live_vhost_domain}/pub/db.sql.gz"
             wget http://${live_vhost_domain}/pub/db.sql.gz
             # mv db.sql.gz var/
@@ -241,17 +242,17 @@ db_update(){
 echo "========================================================================"
 echo "=======================    UPDATING DATABASES URLS   ==================="
 echo "========================================================================"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/unsecure/base_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/secure/base_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='wallfloor/general/wallfloor_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmedtest.tilemountain.co.uk/' Where path='web/unsecure/base_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmedtest.tilemountain.co.uk/' Where path='web/secure/base_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmedtest.tilemountain.co.uk/' Where path='wallfloor/general/wallfloor_url';"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/secure/base_url';"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='web/secure/base_media_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='tonssystem/general/tons_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='tonssystem/general/tons_url/(websites store)';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmedtest.tilemountain.co.uk/' Where path='tonssystem/general/tons_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmedtest.tilemountain.co.uk/' Where path='tonssystem/general/tons_url/(websites store)';"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='wallfloor/general/wallfloor_url';"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://ahmed.tonsoftiles.co.uk/' Where path='tonssystem/general/tons_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='NULL' Where path='pallex/general/pallex_password';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='NULL' Where path='pallex/general/local_password';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='pallex/general/pallex_password';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='pallex/general/local_password';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='orderprocessing/pallex_api/pallex_soap_url';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='sales_email/shipment/copy_to';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='sales_email/order/copy_to';"
@@ -264,9 +265,10 @@ mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='test' Where path='payment/sagepaypaypal/mode';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='test' Where path='payment/sagepaydirectpro_moto/mode';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='test' Where path='payment/sagepayserver_moto/mode';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='algoliasearch_credentials/credentials/application_id';"#'algoliasearch_credentials/credentials/application_id'
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='algoliasearch_credentials/credentials/search_only_api_key';"#algoliasearch_credentials/credentials/search_only_api_key
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='algoliasearch_credentials/credentials/api_key';"#algoliasearch_credentials/credentials/api_key
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='algoliasearch/credentials/application_id';"#'algoliasearch_credentials/credentials/application_id'
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='algoliasearch/credentials/search_only_api_key';"#algoliasearch_credentials/credentials/search_only_api_key
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='algoliasearch/credentials/api_key';"#algoliasearch_credentials/credentials/api_key
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='ahmedtest_' Where path='algoliasearch/credentials/index_prefix';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='web/cookie/cookie_domain';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='0' Where path='mandrill/general/active';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='1' Where path='orderprocessing/uk_mail_api/sandbox';"
