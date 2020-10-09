@@ -103,13 +103,16 @@ echo "Check API Version in vuestorefront-api/config/local.json should be 7.1 not
 echo "
 backend/adminpanel -->  store --> configuration --> Vuestore --> indexer --> vsf = prod(ip:3000),devlocal(localhost:3000)
 backend/adminpanel -->  store --> configuration --> Vuestore --> indexer --> elasticsearch = servicename of elasticsearch in docker-compose file
-backend/adminpanel -->  system --> integration --> create new / use already created tokens in above local.json file
+backend/adminpanel -->  system --> integration --> create new / use already created tokens in above local.json file in magento 2 section
 "
 echo "
 at webserver container http location run indexer
-php bin/magento indexer:reindex
+php bin/magento indexer:reindex (In production run it in vhost/http/)
 and in local directories of vuestore and vuestore-api RUN
 yarn && yarn dev
+IN PRODUCTION VUE STORE SERVER PLACED IN DIGITAL OCEAN::::::
+GOTO both vuestore and vuestore-api And RUN COMMANDS::::
+npx yarn && npx yarn build && npx yarn start
 "
 echo "
 for creating user for backend/adminpanel login
