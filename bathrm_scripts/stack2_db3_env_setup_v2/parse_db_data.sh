@@ -126,12 +126,29 @@ prod_tasks() {
     echo "Script location dir Listing............................................."
     pwd
 
+    cd var
+    ls | grep db
+
+    if [ -e "db.sql.gz" ]
+    then
+        mv db.sql.gz db.sql.gz.bbk
+        ls | grep db
+    fi
+
+    cd ${db_dump_path}
+
+    if [ -e "db.sql.gz" ]
+    then
+        mv db.sql.gz db.sql.gz.bbk
+        ls | grep db
+    fi
+
+    cd ${LIVE_PATH}
     echo "**** Creating DB dump using mage2 Script ****"
 
     bash ${db_dump_script} -dz
     cd var
     ls | grep db
-
     mv db.sql.gz ${db_dump_path}
     cd ${db_dump_path}
     ls ${db_dump_path}
@@ -160,12 +177,12 @@ dev_task() {
     ls
     pwd
     echo "Changing DB Creds.....in env.php"
-    # cat app/etc/${cred_file_name}
+    cat app/etc/${cred_file_name}
 
-    # sed -i "s/${prod_db_name}/${DB_NAME_ENV}/gI" app/etc/${cred_file_name}
-    # sed -i "s/${prod_db_pass}/${DB_PASSWORD_ENV}/gI" app/etc/${cred_file_name}
+    sed -i "s/${prod_db_name}/${DB_NAME_ENV}/gI" app/etc/${cred_file_name}
+    sed -i "s/${prod_db_pass}/${DB_PASSWORD_ENV}/gI" app/etc/${cred_file_name}
 
-    # cat app/etc/${cred_file_name}
+    cat app/etc/${cred_file_name}
 
     echo "======================================"
     echo "Restoring DB in another vhost..."
@@ -236,7 +253,7 @@ echo "=======================    ADMIN PANEL CREDS   ==================="
 echo "=================================================================="
 cd ${DEV_PATH}
 admin_pass="${DB_NAME}@123"
-php-7.3 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=ahmed.butt@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
+php-7.3 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=${DB_NAME}@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
 
 echo "ADMIN PANEL USERNAME:     ${DB_NAME}"
 echo "ADMIN PANEL PASSWORD:     ${admin_pass}"

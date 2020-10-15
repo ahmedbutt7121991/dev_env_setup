@@ -94,7 +94,7 @@ DEV_DB_PASS_NEW=
 ls
 pwd
 cd /microcloud/scripts_ro/
-domain_env_path="/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/dev_env_setup/sample_env_setup_v2"####################################
+domain_env_path="/microcloud/domains/tondev/domains/ahmed.tonsoftiles.co.uk/dev_env_setup/tondev_scripts/stack2_db3_env_setup_v2"
 echo "Checking Command OutPut"
 echo "Dev DB creation and password"
 create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee ${domain_env_path}/dbcreds
@@ -125,16 +125,32 @@ prod_tasks() {
     echo "==========================="
     echo "Script location dir Listing............................................."
     pwd
+    cd var
+    ls | grep db
 
+    if [ -e "db.sql.gz" ]
+    then
+        mv db.sql.gz db.sql.gz.bbk
+        ls | grep db
+    fi
+
+    cd ${db_dump_path}
+
+    if [ -e "db.sql.gz" ]
+    then
+        mv db.sql.gz db.sql.gz.bbk
+        ls | grep db
+    fi
+
+    cd ${LIVE_PATH}
     echo "**** Creating DB dump using mage2 Script ****"
 
     bash ${db_dump_script} -dz
     cd var
     ls | grep db
-
-    # mv db.sql.gz ${db_dump_path}
-    # cd ${db_dump_path}
-    # ls ${db_dump_path}
+    mv db.sql.gz ${db_dump_path}
+    cd ${db_dump_path}
+    ls ${db_dump_path}
 }
 
 
@@ -193,8 +209,8 @@ dev_task() {
         pwd
         echo y | bash mage2-dbdump.sh -rz
     else
-        echo "Downloading Data base: wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz"
-        wget http://mwhole.wallsandfloors.co.uk/pub/db.sql.gz
+        echo "Downloading Data base: wget http://mubashir.tonsoftiles.co.uk/pub/db.sql.gz"
+        wget http://mubashir.tonsoftiles.co.uk/pub/db.sql.gz
         # mv db.sql.gz var/
         cd ..
         pwd
@@ -208,15 +224,15 @@ echo "=======================    UPDATING DATABASES URLS   ==================="
 echo "========================================================================"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -e "Show databases;"
 # mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "select * from ${DB_TABLE};"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_url';"
-# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_media_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/unsecure/base_link_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/secure/base_url';"
-# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/secure/base_media_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='web/secure/base_link_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='tm_integrations/general/tm_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='wallfloor/general/wallfloor_url';"
-mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://hwhole.wallsandfloors.co.uk/' Where path='tonssystem/general/tons_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='web/unsecure/base_url';"
+# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='web/unsecure/base_media_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='web/unsecure/base_link_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='web/secure/base_url';"
+# mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='web/secure/base_media_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='web/secure/base_link_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='tm_integrations/general/tm_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='wallfloor/general/wallfloor_url';"
+mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='http://mubashir.tonsoftiles.co.uk/' Where path='tonssystem/general/tons_url';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='advanced/modules_disable_output/Mb_Ipconfigurations';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='mb_microconnect/credentials/password';"
 mysql -h${BD_HOST} -u${USER_NAME} -p${DB_PASSWORD} -D ${DB_NAME} -e "Update ${DB_TABLE} set value='' Where path='mb_microconnect/credentials/user_name';"
@@ -236,7 +252,7 @@ echo "=======================    ADMIN PANEL CREDS   ==================="
 echo "=================================================================="
 cd ${DEV_PATH}
 admin_pass="${DB_NAME}@123"
-php-7.1 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=ahmed.butt@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
+php-7.1 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=${DB_NAME}@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
 
 echo "ADMIN PANEL USERNAME:     ${DB_NAME}"
 echo "ADMIN PANEL PASSWORD:     ${admin_pass}"
