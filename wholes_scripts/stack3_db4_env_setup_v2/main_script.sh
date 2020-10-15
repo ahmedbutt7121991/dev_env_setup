@@ -39,25 +39,25 @@ echo "................................."
 echo "..........DEVELOPMENT............."
 echo "................................."
 
-time ./parse_db_data.sh -d
+# time ./parse_db_data.sh -d
 
 echo "..................................."
 echo "..........DATABASE_URL............."
 echo "..................................."
 
-time ./parse_db_data.sh -u
+# time ./parse_db_data.sh -u
 
 echo ".............................................."
 echo "..........ADMIN_PANEL_LOGIN_CREDS............."
 echo ".............................................."
 
-time ./parse_db_data.sh -l
+# time ./parse_db_data.sh -l
 
 echo "................................"
 echo "..........STANDLONE............."
 echo "................................"
 
-# time ./parse_db_data.sh -cpdul
+time ./parse_db_data.sh -cpdul
 
 
 echo "..................................."

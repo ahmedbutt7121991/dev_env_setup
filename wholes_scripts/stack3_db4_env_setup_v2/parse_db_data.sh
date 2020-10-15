@@ -94,7 +94,7 @@ DEV_DB_PASS_NEW=
 ls
 pwd
 cd /microcloud/scripts_ro/
-domain_env_path="/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/dev_env_setup/sample_env_setup_v2"####################################
+domain_env_path="/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/dev_env_setup/wholes_scripts/stack3_db4_env_setup_v2"
 echo "Checking Command OutPut"
 echo "Dev DB creation and password"
 create_db_user.sh -h ${BD_HOST} -u ${DB_NAME} | tee ${domain_env_path}/dbcreds
@@ -119,22 +119,42 @@ prod_tasks() {
     echo "======================================================================="
     echo "===============       PRODUCTION TASKS RUNNING        ================="
     echo "======================================================================="
+    echo "===========>>>>"
+    echo "======================================================================="
+    echo "===============       PRODUCTION TASKS RUNNING        ================="
+    echo "======================================================================="
     echo "Home dir Listing............................................."
     pwd	
     cd ${LIVE_PATH}
     echo "==========================="
     echo "Script location dir Listing............................................."
     pwd
+    cd var
+    ls | grep db
 
+    if [ -e "db.sql.gz" ]
+    then
+        mv db.sql.gz db.sql.gz.bbk
+        ls | grep db
+    fi
+
+    cd ${db_dump_path}
+
+    if [ -e "db.sql.gz" ]
+    then
+        mv db.sql.gz db.sql.gz.bbk
+        ls | grep db
+    fi
+
+    cd ${LIVE_PATH}
     echo "**** Creating DB dump using mage2 Script ****"
 
     bash ${db_dump_script} -dz
     cd var
     ls | grep db
-
-    # mv db.sql.gz ${db_dump_path}
-    # cd ${db_dump_path}
-    # ls ${db_dump_path}
+    mv db.sql.gz ${db_dump_path}
+    cd ${db_dump_path}
+    ls ${db_dump_path}
 }
 
 
@@ -236,7 +256,7 @@ echo "=======================    ADMIN PANEL CREDS   ==================="
 echo "=================================================================="
 cd ${DEV_PATH}
 admin_pass="${DB_NAME}@123"
-php-7.1 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=ahmed.butt@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
+php-7.1 bin/magento admin:user:create --admin-user=${DB_NAME} --admin-password=${admin_pass} --admin-email=${DB_NAME}@ki5.co.uk --admin-firstname=${DB_NAME} --admin-lastname=${live_base_domain}
 
 echo "ADMIN PANEL USERNAME:     ${DB_NAME}"
 echo "ADMIN PANEL PASSWORD:     ${admin_pass}"

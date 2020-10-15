@@ -1,12 +1,12 @@
 #!/bin/bash
 
 BD_HOST='db4.i'
-DB_NAME='h_wholes'
-USER_NAME='h_wholes'
-DB_PASSWORD='06d586efa05df8d896ab8d76675ef189'
-DB_NAME_ENV="'h_wholes',"
-USER_NAME_ENV="'h_wholes',"
-DB_PASSWORD_ENV="'06d586efa05df8d896ab8d76675ef189',"
+DB_NAME=''
+USER_NAME=''
+DB_PASSWORD=''
+DB_NAME_ENV=""
+USER_NAME_ENV=""
+DB_PASSWORD_ENV=""
 # DB_NAME_ENV="'ahmed_tons',"
 # USER_NAME_ENV="'ahmed_tons',"
 # DB_PASSWORD_ENV="'LzuGP9wzBhOsPDry',"
@@ -14,7 +14,7 @@ DB_PASSWORD_ENV="'06d586efa05df8d896ab8d76675ef189',"
 # USER_NAME='ahmed_tons'
 # DB_PASSWORD='LzuGP9wzBhOsPDry'
 LIVE_PATH='/microcloud/domains/wholes/domains/mwhole.wallsandfloors.co.uk/http/'
-DEV_PATH='/microcloud/domains/wholes/domains/hwhole.wallsandfloors.co.uk/http/'
+DEV_PATH='/microcloud/domains/wholes/domains/<vhost_name>/http/'
 DB_TABLE='core_config_data'
 # URL='http://ahmed.tonsoftiles.co.uk/'
 # T_DB_NAME='Tester_ton_test'
