@@ -23,8 +23,8 @@ env.roledefs = {
     'dev': ['www-data@acc.3.magestack.com '],
     'prod': ['www-data@acc.3.magestack.com'],
     }
-env.password = "tmH7vwBE"
-env.passwords = {'www-data@acc.3.magestack.com':'tmH7vwBE', 'www-data@acc.3.magestack.com':'tmH7vwBE'}
+env.password = ""
+env.passwords = {'www-data@acc.3.magestack.com':'', 'www-data@acc.3.magestack.com':''}
 
 
 
